@@ -14,10 +14,10 @@ const Header = () => {
       height: "300px",
      }} 
    >
-    {/* OVERLAY OSCURO */}
+    {/* Overlay oscuro del Header*/}
       <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-75"></div>
 
-      {/* CONTENIDO */}
+      {/* Contenido */}
       <div className="container h-100 position-relative d-flex flex-column justify-content-center text-center">
         <h1>¡Pizzería Mamma Mia!</h1>
         <p>¡Tenemos las mejores pizzas que podrás encontrar!</p>
