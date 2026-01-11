@@ -1,7 +1,8 @@
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Login from "./components/Login";
-import Register from "./components/Register";
+// HITO 2 - LOGIN / REGISTER (COMENTADO)
+//import Login from "./components/Login";
+//import Register from "./components/Register";
 
 // HITO 1 (COMENTADO)
 // import Header from "./components/Header";
