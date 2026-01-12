@@ -1,5 +1,10 @@
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Cart from "./components/Cart";
+
+//Home (COMENTADO)
+//import Home from "./components/Home";
+
 // HITO 2 - LOGIN / REGISTER (COMENTADO)
 //import Login from "./components/Login";
 //import Register from "./components/Register";
