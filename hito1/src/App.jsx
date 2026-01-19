@@ -1,6 +1,8 @@
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Cart from "./components/Cart";
+//import Cart from "./components/Cart";
+import Pizza from "./components/Pizza";
+
 
 // HITO 3
 // import Home from "./components/Home";
@@ -18,12 +20,9 @@ const App = () => {
 
       <main className="flex-grow-1">
         {/* <Home /> */}
-        {/* <Login /> */}
-        {/* <Register /> */}
-
-        <Cart />
       </main>
 
+      <Pizza />
       <Footer />
     </div>
   );
