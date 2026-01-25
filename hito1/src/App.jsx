@@ -1,30 +1,38 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-//import Cart from "./components/Cart";
-import Pizza from "./components/Pizza";
 
-
-// HITO 3
-// import Home from "./components/Home";
-// import Login from "./components/Login";
-// import Register from "./components/Register";
-
-// HITO 1
-// import Header from "./components/Header";
-// import CardPizza from "./components/CardPizza";
+import Home from "./pages/Home";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Cart from "./pages/Cart";
+import Pizza from "./pages/Pizza";
+import Profile from "./pages/Profile";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   return (
-    <div className="d-flex flex-column min-vh-100">
-      <Navbar />
+    <BrowserRouter>
+      <div className="d-flex flex-column min-vh-100">
+        <Navbar />
 
-      <main className="flex-grow-1">
-        {/* <Home /> */}
-      </main>
+        <main className="flex-grow-1">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/pizza/p001" element={<Pizza />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/404" element={<NotFound />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
 
-      <Pizza />
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 };
 

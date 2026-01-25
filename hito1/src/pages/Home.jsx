@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 //import { pizzas } from "../pizzas";
-import CardPizza from "./CardPizza";
+import CardPizza from "../components/CardPizza";
 
 const Home = () => {
   const [pizzas, setPizzas] = useState([]);
@@ -21,7 +21,6 @@ const Home = () => {
   console.log("HOME CARGADO");
 
   return (
-    
     <div className="container my-5">
       <div className="row g-4">
         {pizzas.map((pizza) => (
