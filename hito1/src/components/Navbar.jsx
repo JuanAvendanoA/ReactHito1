@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
+import { useCart } from "../context/CartContext"; // Se importa el context
 
 const Navbar = () => {
-  const total = 25000; // Total de la compra
-  const token = false; // Cambiar a true si el usuario está logueado
+  const { getTotal } = useCart(); // Usamos la función getTotal del CartContext
+  const total = getTotal(); // Se obtiene el total dinámico del carrito
+  const token = false; // Cambia a true si el usuario está logueado
 
   return (
     <nav

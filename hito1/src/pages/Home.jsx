@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-//import { pizzas } from "../pizzas";
+import { useCart } from "../context/CartContext"; // se importa context
 import CardPizza from "../components/CardPizza";
 
 const Home = () => {
   const [pizzas, setPizzas] = useState([]);
+  const { addToCart } = useCart(); // Obtenemos la funcion para agregar al carrito
 
   useEffect(() => {
     const fetchPizzas = async () => {
@@ -18,7 +19,6 @@ const Home = () => {
 
     fetchPizzas();
   }, []);
-  console.log("HOME CARGADO");
 
   return (
     <div className="container my-5">
@@ -30,6 +30,7 @@ const Home = () => {
               price={pizza.price}
               ingredients={pizza.ingredients}
               img={pizza.img}
+              addToCart={() => addToCart(pizza)} // Pasamos la función addToCart
             />
           </div>
         ))}
