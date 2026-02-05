@@ -7,3 +7,5 @@
 inicio hito 5
 finaliza hito 5
 inicio Hito 6
+
+se realiza visualizacion de la API desde el archivo pizza.js para visualizar el catalago de manera local momentaneamente

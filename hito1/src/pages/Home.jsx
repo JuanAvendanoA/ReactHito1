@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext"; // se importa context
 import CardPizza from "../components/CardPizza";
+import { pizzas as localPizzas } from "../pizzas"; // importar datos locales como fallback
 
 const Home = () => {
   const [pizzas, setPizzas] = useState([]);
@@ -13,7 +14,8 @@ const Home = () => {
         const data = await response.json();
         setPizzas(data);
       } catch (error) {
-        console.error("Error al obtener pizzas:", error);
+        console.error("Error al obtener pizzas de la API, usando datos locales:", error);
+        setPizzas(localPizzas); // Usar datos locales si la API falla
       }
     };
 
