@@ -1,10 +1,18 @@
 import { Link } from "react-router-dom";
-import { useCart } from "../context/CartContext"; // Se importa el context
+import { useCart } from "../context/CartContext";
+import { useUser } from "../context/UserContext";
 
 const Navbar = () => {
   const { getTotal } = useCart(); // Usamos la función getTotal del CartContext
   const total = getTotal(); // Se obtiene el total dinámico del carrito
-  const token = false; // Cambia a true si el usuario está logueado
+  const { token, logout } = useUser(); // Obtenemos el estado del token y la función logout
+
+  console.log("Token:", token); // Log para verificar el valor del token
+
+  const handleLogout = () => {
+    console.log("Logout button clicked");
+    logout();
+  };
 
   return (
     <nav
@@ -12,7 +20,6 @@ const Navbar = () => {
       style={{ zIndex: 10 }}
     >
       <div className="container-fluid d-flex justify-content-between">
-        {/* botones alineación izquierda */}
         <div className="d-flex align-items-center gap-2">
           <span className="navbar-brand mb-0">🍕 Pizzería Mamma Mia</span>
 
@@ -25,7 +32,10 @@ const Navbar = () => {
               <Link to="/profile" className="btn btn-outline-light btn-sm">
                 🔓 Profile
               </Link>
-              <button className="btn btn-outline-light btn-sm">
+              <button
+                className="btn btn-outline-light btn-sm"
+                onClick={handleLogout}
+              >
                 🔒 Logout
               </button>
             </>
@@ -41,7 +51,6 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* total alineación derecha */}
         <Link to="/cart" className="btn btn-info text-dark fw-bold btn-sm">
           🛒 Total: ${total.toLocaleString("es-CL")}
         </Link>

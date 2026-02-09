@@ -1,23 +1,34 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom"; // Se Importa useParams
 
 const Pizza = () => {
+  const { id } = useParams(); // Se Obtiene el id de la pizza desde la URL
   const [pizza, setPizza] = useState(null);
+  const [error, setError] = useState(false); // Para manejar errores de carga
 
   useEffect(() => {
     const getPizza = async () => {
       try {
-        const res = await fetch(
-          "http://localhost:5000/api/pizzas/p001", //donde dice p002 y etc.. es el id de la pizza, al cambiarlo carga otra seleccion del archivo pizzas.json
-        );
+        const res = await fetch(`http://localhost:5000/api/pizzas/${id}`); // Usamos el id dinámico de la URL
+        if (!res.ok) {
+          throw new Error("Pizza no encontrada");
+        }
         const data = await res.json();
         setPizza(data);
       } catch (error) {
         console.error("Error al cargar la pizza", error);
+        setError(true);
       }
     };
 
     getPizza();
-  }, []);
+  }, [id]); // Se asegura que el efecto se ejecute cada vez que el id cambie
+
+  if (error) {
+    return (
+      <p>Hubo un problema al cargar la pizza. Intenta de nuevo más tarde.</p>
+    );
+  }
 
   if (!pizza) {
     return <p>Cargando pizza...</p>;

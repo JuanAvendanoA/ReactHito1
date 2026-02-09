@@ -1,7 +1,9 @@
 import { useCart } from "../context/CartContext"; // Importamos el CartContext
+import { useUser } from "../context/UserContext"; // Importamos el hook de UserContext
 
 const Cart = () => {
   const { cart, addToCart, removeFromCart, getTotal } = useCart(); // Consumimos el CartContext
+  const { token } = useUser(); // Usamos el contexto para obtener el token del usuario
 
   // Funciones para aumentar y disminuir la cantidad de pizzas en el carrito
   const increase = (id) => {
@@ -62,7 +64,12 @@ const Cart = () => {
 
       <h5>Total: ${total.toLocaleString()}</h5>
 
-      <button className="btn btn-dark mt-3">Pagar</button>
+      <button
+        className="btn btn-dark mt-3"
+        disabled={!token} // Deshabilitamos el botón si el token es false
+      >
+        Pagar
+      </button>
     </div>
   );
 };

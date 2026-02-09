@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom"; // Importamos Link
 
-const CardPizza = ({ name, price, ingredients, img, addToCart }) => {
+const CardPizza = ({ id, name, price, ingredients, img, addToCart }) => {
   return (
     <div className="card h-100 shadow-sm">
       <img src={img} className="card-img-top" alt={name} />
@@ -17,9 +18,13 @@ const CardPizza = ({ name, price, ingredients, img, addToCart }) => {
         </p>
         {/* Botones de acción para ver más detalles o añadir al carrito */}
         <div className="d-flex justify-content-between mt-3">
-          <button className="btn btn-outline-secondary btn-sm">
+          {/* Usamos Link para redirigir a la página de Pizza.jsx con el id de la pizza */}
+          <Link
+            to={`/pizza/${id}`}
+            className="btn btn-outline-secondary btn-sm"
+          >
             Ver Más 👀
-          </button>
+          </Link>
           {/* Botón de añadir al carrito */}
           <button
             className="btn btn-dark btn-sm"
