@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useUser } from "./context/UserContext";
 import { CartProvider } from "./context/CartContext";
 import { PizzaProvider } from "./context/PizzaContext";
 import { UserProvider } from "./context/UserContext"; // Asegúrate de importar el UserProvider
@@ -17,8 +18,6 @@ const App = () => {
   return (
     <BrowserRouter>
       <UserProvider>
-        {" "}
-        {/* Aquí se envuelve toda la aplicación con UserProvider */}
         <CartProvider>
           <PizzaProvider>
             <div className="d-flex flex-column min-vh-100">
@@ -28,9 +27,23 @@ const App = () => {
                   <Route path="/" element={<Home />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/login" element={<Login />} />
-                  <Route path="/cart" element={<Cart />} />
+                  <Route
+                    path="/cart"
+                    element={
+                      <ProtectedRoute>
+                        <Cart />
+                      </ProtectedRoute>
+                    }
+                  />
                   <Route path="/pizza/p001" element={<Pizza />} />
-                  <Route path="/profile" element={<Profile />} />
+                  <Route
+                    path="/profile"
+                    element={
+                      <ProtectedRoute>
+                        <Profile />
+                      </ProtectedRoute>
+                    }
+                  />
                   <Route path="/404" element={<NotFound />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
@@ -42,6 +55,16 @@ const App = () => {
       </UserProvider>
     </BrowserRouter>
   );
+};
+
+// Ruta protegida que solo permite el acceso si el usuario está autenticado
+const ProtectedRoute = ({ children }) => {
+  const { token } = useUser(); // Obtenemos el token del contexto de usuario
+  if (!token) {
+    // Redirige a login si no está autenticado
+    return <Navigate to="/login" replace />;
+  }
+  return children; // Si está autenticado, muestra el contenido de la ruta
 };
 
 export default App;

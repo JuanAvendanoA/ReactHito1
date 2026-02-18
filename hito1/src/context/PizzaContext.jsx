@@ -13,9 +13,24 @@ export const PizzaProvider = ({ children }) => {
   useEffect(() => {
     // Simulando un fetch para obtener las pizzas
     const fetchPizzas = async () => {
-      const response = await fetch("/api/pizzas");
-      const data = await response.json();
-      setPizzas(data);
+      try {
+        const response = await fetch("http://localhost:5000/api/pizzas");
+        const contentType = response.headers.get("content-type") || "";
+        if (!response.ok) {
+          const text = await response.text();
+          console.error("PizzaContext: API error", response.status, text);
+          return;
+        }
+        if (contentType.includes("application/json")) {
+          const data = await response.json();
+          setPizzas(data);
+        } else {
+          const text = await response.text();
+          console.error("PizzaContext: respuesta no JSON:", text);
+        }
+      } catch (err) {
+        console.error("PizzaContext fetch error:", err);
+      }
     };
     fetchPizzas();
   }, []);

@@ -18,13 +18,17 @@ export const CartProvider = ({ children }) => {
     setCart(cart.filter((item) => item.id !== id));
   };
 
+  const clearCart = () => setCart([]);
+
   // Calcula el total de la compra
   const getTotal = () => {
     return cart.reduce((total, item) => total + item.price, 0);
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, getTotal }}>
+    <CartContext.Provider
+      value={{ cart, addToCart, removeFromCart, getTotal, clearCart }}
+    >
       {children}
     </CartContext.Provider>
   );

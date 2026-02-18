@@ -1,11 +1,16 @@
 import { useState } from "react";
+import { useUser } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const { register } = useUser();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email || !password || !confirmPassword) {
@@ -23,7 +28,14 @@ const Register = () => {
       return;
     }
 
-    alert("Registro exitoso!");
+    try {
+      await register(email, password);
+      alert("Registro exitoso!");
+      navigate("/profile");
+    } catch (err) {
+      console.error(err);
+      alert("Error al registrar: " + err.message);
+    }
   };
 
   return (

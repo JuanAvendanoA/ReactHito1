@@ -1,5 +1,6 @@
 import { useCart } from "../context/CartContext"; // Importamos el CartContext
 import { useUser } from "../context/UserContext"; // Importamos el hook de UserContext
+import { useState } from "react";
 
 const Cart = () => {
   const { cart, addToCart, removeFromCart, getTotal } = useCart(); // Consumimos el CartContext
@@ -7,7 +8,8 @@ const Cart = () => {
 
   // Funciones para aumentar y disminuir la cantidad de pizzas en el carrito
   const increase = (id) => {
-    addToCart(cart.find((pizza) => pizza.id === id)); // Añadimos la pizza de nuevo para aumentar la cantidad
+    const pizza = cart.find((pizza) => pizza.id === id);
+    addToCart(pizza); // Añadimos la pizza de nuevo para aumentar la cantidad
   };
 
   const decrease = (id) => {
@@ -21,6 +23,9 @@ const Cart = () => {
   };
 
   const total = getTotal(); // Obtenemos el total a través del CartContext
+  const { clearCart } = useCart();
+  const [success, setSuccess] = useState(false);
+  const { token } = useUser();
 
   return (
     <div className="container my-5">
@@ -41,7 +46,7 @@ const Cart = () => {
 
             <span>${pizza.price.toLocaleString()}</span>
 
-            <div>
+            <div className="d-flex align-items-center gap-2">
               <button
                 className="btn btn-outline-danger btn-sm"
                 onClick={() => decrease(pizza.id)}
@@ -65,11 +70,43 @@ const Cart = () => {
       <h5>Total: ${total.toLocaleString()}</h5>
 
       <button
-        className="btn btn-dark mt-3"
-        disabled={!token} // Deshabilitamos el botón si el token es false
+        className="btn btn-dark mt-3 w-100"
+        disabled={!token}
+        onClick={async () => {
+          if (!token) {
+            alert("¡Debes iniciar sesión para realizar el pago!");
+            return;
+          }
+
+          try {
+            const res = await fetch("http://localhost:5000/api/checkouts", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ cart }),
+            });
+
+            if (!res.ok) {
+              const text = await res.text();
+              throw new Error(text || "Error en pago");
+            }
+
+            setSuccess(true);
+            clearCart();
+          } catch (err) {
+            console.error("Checkout error:", err);
+            alert("Error al procesar el pago: " + err.message);
+          }
+        }}
       >
         Pagar
       </button>
+
+      {success && (
+        <div className="alert alert-success mt-3">Compra realizada con éxito 🎉</div>
+      )}
     </div>
   );
 };

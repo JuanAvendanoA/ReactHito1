@@ -7,10 +7,7 @@ const Navbar = () => {
   const total = getTotal(); // Se obtiene el total dinámico del carrito
   const { token, logout } = useUser(); // Obtenemos el estado del token y la función logout
 
-  console.log("Token:", token); // Log para verificar el valor del token
-
   const handleLogout = () => {
-    console.log("Logout button clicked");
     logout();
   };
 
@@ -29,11 +26,11 @@ const Navbar = () => {
 
           {token ? (
             <>
-              <Link to="/profile" className="btn btn-outline-light btn-sm">
+              <Link to="/profile" className="btn btn-outline-light btn-sm ms-2">
                 🔓 Profile
               </Link>
               <button
-                className="btn btn-outline-light btn-sm"
+                className="btn btn-outline-light btn-sm ms-2"
                 onClick={handleLogout}
               >
                 🔒 Logout
@@ -41,17 +38,20 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Link to="/login" className="btn btn-outline-light btn-sm">
+              <Link to="/login" className="btn btn-outline-light btn-sm ms-2">
                 🔐 Login
               </Link>
-              <Link to="/register" className="btn btn-outline-light btn-sm">
+              <Link
+                to="/register"
+                className="btn btn-outline-light btn-sm ms-2"
+              >
                 🔐 Register
               </Link>
             </>
           )}
         </div>
 
-        <Link to="/cart" className="btn btn-info text-dark fw-bold btn-sm">
+        <Link to="/cart" className="btn btn-info text-dark fw-bold btn-sm ms-2">
           🛒 Total: ${total.toLocaleString("es-CL")}
         </Link>
       </div>

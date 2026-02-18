@@ -1,10 +1,14 @@
 import { useState } from "react";
+import { useUser } from "../context/UserContext"; // Importamos el hook de UserContext
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useUser(); // Usamos el hook para acceder al método login
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
@@ -17,7 +21,13 @@ const Login = () => {
       return;
     }
 
-    alert("Login exitoso");
+    try {
+      await login(email, password); // Llamamos al método login del UserContext
+      alert("Login exitoso");
+      navigate("/profile");
+    } catch (error) {
+      alert("Error en login, intente nuevamente");
+    }
   };
 
   return (
@@ -45,9 +55,7 @@ const Login = () => {
           />
         </div>
 
-        <button className="btn btn-dark w-100">
-          Ingresar
-        </button>
+        <button className="btn btn-dark w-100">Ingresar</button>
       </form>
     </div>
   );
