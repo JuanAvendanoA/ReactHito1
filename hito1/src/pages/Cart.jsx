@@ -3,7 +3,7 @@ import { useUser } from "../context/UserContext"; // Importamos el hook de UserC
 import { useState } from "react";
 
 const Cart = () => {
-  const { cart, addToCart, removeFromCart, getTotal } = useCart(); // Consumimos el CartContext
+  const { cart, addToCart, removeFromCart, getTotal, clearCart } = useCart(); // Consumimos el CartContext
   const { token } = useUser(); // Usamos el contexto para obtener el token del usuario
 
   // Funciones para aumentar y disminuir la cantidad de pizzas en el carrito
@@ -23,9 +23,7 @@ const Cart = () => {
   };
 
   const total = getTotal(); // Obtenemos el total a través del CartContext
-  const { clearCart } = useCart();
   const [success, setSuccess] = useState(false);
-  const { token } = useUser();
 
   return (
     <div className="container my-5">
@@ -105,7 +103,9 @@ const Cart = () => {
       </button>
 
       {success && (
-        <div className="alert alert-success mt-3">Compra realizada con éxito 🎉</div>
+        <div className="alert alert-success mt-3">
+          Compra realizada con éxito 🎉
+        </div>
       )}
     </div>
   );
